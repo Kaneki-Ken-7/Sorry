@@ -282,7 +282,7 @@
     🌸 For my incredible girlfriend (Ananya) 🌸
   </div>
   <div class="sub">
-    “Apologizing with my whole heart + zero dignity”
+    “Apologizing with my whole heart 💖”
   </div>
 
   <!-- Dynamic apology message bubble -->
@@ -292,7 +292,7 @@
 
   <div class="button-group">
     <button class="btn sorry-btn" id="generateSorryBtn">
-      🤦‍♂️ Generate funny sorry
+      🤦‍♂️ Generate sorry
     </button>
     <button class="btn forgive-btn" id="forgiveBtn">
       💖 Forgive me? (pretty please)
@@ -314,7 +314,7 @@
   </div>
 
   <div class="footer-note">
-    🍦 PS: This apology comes with virtual ice cream rights 🍪
+    🍦 PS: This apology comes with virtual Paani Puri (Batashe) rights 🍪
   </div>
 </div>
 
@@ -427,87 +427,81 @@
 
   // FORGIVE ME action: confetti + updates status + funny messages
   function handleForgiveness() {
-    // always shoot confetti because it's fun! (multiple bursts)
+  // Safe confetti – won’t break if library is missing
+  if (typeof canvasConfetti === 'function') {
     canvasConfetti({ particleCount: 140, spread: 80, origin: { y: 0.6 }, colors: ['#ff9ec0', '#ffb7c5', '#ffd966'] });
     canvasConfetti({ particleCount: 60, spread: 120, origin: { y: 0.7, x: 0.3 }, startVelocity: 15 });
     canvasConfetti({ particleCount: 60, spread: 120, origin: { y: 0.7, x: 0.7 }, startVelocity: 15 });
     setTimeout(() => {
-      canvasConfetti({ particleCount: 300, spread: 100, origin: { y: 0.5 }, startVelocity: 12, decay: 0.9 });
+      if (typeof canvasConfetti === 'function') {
+        canvasConfetti({ particleCount: 300, spread: 100, origin: { y: 0.5 }, startVelocity: 12, decay: 0.9 });
+      }
     }, 120);
-    
-    // case: already forgiven before? => cute extra thanks, no change of main status (but we keep the love)
-    if (forgivenFlag) {
-      // already forgiven scenario: extra silly messages and appreciation
-      const alreadyMessages = [
-        "💞 You already forgave me, but you're so sweet that you clicked again! I love you! 💞",
-        "🥹 You forgave me twice?? I'm the luckiest goof on earth! 🥹",
-        "🌸 Already forgiven but thanks for the extra confetti! You're an angel 🌸",
-        "😭 STOP BEING SO NICE I'm tearing up (but in a manly way) 😭",
-        "🍭 You hit forgive again — my heart grew three sizes! 🍭"
-      ];
-      const randomMsg = alreadyMessages[Math.floor(Math.random() * alreadyMessages.length)];
-      showFlashMessage(randomMsg, true);
-      // Also maybe make little heart floating effect via extra mini confetti? already did above. 
-      // change forgiveness status temporarily? Let's keep main status as forgiven but add funny flash
-      forgivenessStatusDiv.innerHTML = "💞 FORGIVEN (and re-forgiven because you're an angel) 💞";
-      forgivenessStatusDiv.style.background = "#e0ffe6";
-      setTimeout(() => {
-        if (forgivenFlag) {
-          forgivenessStatusDiv.innerHTML = "✅ PERMANENTLY FORGIVEN 💖 (and extra hugs) ✅";
-          forgivenessStatusDiv.style.background = "#e6ffe6";
-        }
-      }, 1800);
-      return;
-    }
-    
-    // FIRST TIME FORGIVEN (main event)
-    forgivenFlag = true;
-    
-    // Update status div with heartfelt + funny vibe
-    forgivenessStatusDiv.innerHTML = "💖✨ FORGIVEN! ✨💖 <br> (you just made a silly guy very happy)";
-    forgivenessStatusDiv.style.background = "#d9ffe6";
-    forgivenessStatusDiv.style.color = "#a13e60";
-    forgivenessStatusDiv.style.fontWeight = "bold";
-    
-    // sweet flash message
-    showFlashMessage("🎉 YAY! She forgave me! I promise to be less of a dork (no promises though) 🎉", true);
-    
-    // change the apology bubble to a joyful forgiving message
-    apologyBox.innerHTML = `<span>💕🥰 SHE FORGAVE ME! 🥰💕<br><span style="font-size:1rem;">(and I'll never steal the blankets again... maybe)</span></span>`;
-    animateBubble();
-    
-    // add extra playful "thank you" dynamic update on stats bar
-    const statsDiv = document.querySelector('.stats');
-    statsDiv.style.background = "#f2ffe6";
-    statsDiv.style.transition = "0.2s";
-    
-    // after 2 sec, add a cute label inside stats bar (without breaking)
+  } else {
+    console.log("Confetti unavailable, but apology still works!");
+    // optional: show a text fallback
+    showFlashMessage("✨ (imagine confetti here) ✨", false);
+  }
+
+  // --- already forgiven? extra love ---
+  if (forgivenFlag) {
+    const alreadyMessages = [
+      "💞 You already forgave me, but you're so sweet that you clicked again! I love you! 💞",
+      "🥹 You forgave me twice?? I'm the luckiest goof on earth! 🥹",
+      "🌸 Already forgiven but thanks for the extra love! You're an angel 🌸",
+      "😭 STOP BEING SO NICE I'm tearing up (but in a manly way) 😭",
+      "🍭 You hit forgive again — my heart grew three sizes! 🍭"
+    ];
+    const randomMsg = alreadyMessages[Math.floor(Math.random() * alreadyMessages.length)];
+    showFlashMessage(randomMsg, true);
+    forgivenessStatusDiv.innerHTML = "💞 FORGIVEN (and re-forgiven because you're an angel) 💞";
+    forgivenessStatusDiv.style.background = "#e0ffe6";
     setTimeout(() => {
       if (forgivenFlag) {
-        const extraSpan = document.createElement('span');
-        extraSpan.innerHTML = "❤️‍🔥 FORGIVEN ❤️‍🔥";
-        extraSpan.style.marginLeft = "8px";
-        extraSpan.style.background = "#ffecb3";
-        extraSpan.style.padding = "2px 10px";
-        extraSpan.style.borderRadius = "40px";
-        extraSpan.style.fontSize = "0.8rem";
-        const statParent = document.querySelector('.stats');
-        if (statParent && !statParent.querySelector('.forgiven-badge')) {
-          extraSpan.classList.add('forgiven-badge');
-          statParent.appendChild(extraSpan);
-        }
+        forgivenessStatusDiv.innerHTML = "✅ FORGIVEN 💖 (and extra hugs) ✅";
+        forgivenessStatusDiv.style.background = "#e6ffe6";
       }
-    }, 600);
-    
-    // also change the background of the apology card slightly to celebrate (light spark)
-    const card = document.querySelector('.apology-card');
-    card.style.transition = "background 0.4s";
-    card.style.backgroundColor = "rgba(255, 245, 250, 0.96)";
-    
-    // bonus: generate a final random silly "i promise" inside the bubble after 4 seconds? no, it's fine.
-    // but also disable the "forgive" button from doing major status change again? Not disabled, but handled by forgivenFlag
-    // Also, change 'generate' button behaviour becomes more playful but not necessary
+    }, 1800);
+    return;
   }
+
+  // --- FIRST TIME FORGIVEN ---
+  forgivenFlag = true;
+  
+  forgivenessStatusDiv.innerHTML = "💖✨ FORGIVEN! ✨💖 <br> (you just made a silly guy very happy)";
+  forgivenessStatusDiv.style.background = "#d9ffe6";
+  forgivenessStatusDiv.style.color = "#a13e60";
+  forgivenessStatusDiv.style.fontWeight = "bold";
+  
+  showFlashMessage("🎉 YAY! She forgave me! I promise to be less of a dork (no promises though) 🎉", true);
+  
+  apologyBox.innerHTML = `<span>💕🥰 SHE FORGAVE ME! 🥰💕<br><span style="font-size:1rem;">(and I'll never irritate you again... maybe)</span></span>`;
+  animateBubble();
+  
+  const statsDiv = document.querySelector('.stats');
+  statsDiv.style.background = "#f2ffe6";
+  
+  setTimeout(() => {
+    if (forgivenFlag) {
+      const extraSpan = document.createElement('span');
+      extraSpan.innerHTML = "❤️‍🔥 FORGIVEN ❤️‍🔥";
+      extraSpan.style.marginLeft = "8px";
+      extraSpan.style.background = "#ffecb3";
+      extraSpan.style.padding = "2px 10px";
+      extraSpan.style.borderRadius = "40px";
+      extraSpan.style.fontSize = "0.8rem";
+      const statParent = document.querySelector('.stats');
+      if (statParent && !statParent.querySelector('.forgiven-badge')) {
+        extraSpan.classList.add('forgiven-badge');
+        statParent.appendChild(extraSpan);
+      }
+    }
+  }, 600);
+  
+  const card = document.querySelector('.apology-card');
+  card.style.transition = "background 0.4s";
+  card.style.backgroundColor = "rgba(255, 245, 250, 0.96)";
+}
 
   // generate first apology on click + also provide playful intro if they click before any apology
   generateBtn.addEventListener("click", () => {
@@ -531,7 +525,7 @@
       const catApologies = [
         "🐱 sorry for acting like a grumpy cat when I'm sleepy",
         "🐈 I'm sorry for not sending enough cat memes lately",
-        "🐾 sorry for being a copycat of your bad jokes"
+        // "🐾 sorry for being a copycat of your bad jokes"
       ];
       const randomCat = catApologies[Math.floor(Math.random() * catApologies.length)];
       apologyBox.innerHTML = `<span>🐈⬛✨ ULTRA SECRET APOLOGY: <br><strong>${randomCat}</strong> ✨🐈⬛</span>`;
@@ -559,7 +553,7 @@
   const footerNote = document.querySelector('.footer-note');
   footerNote.addEventListener('click', () => {
     canvasConfetti({ particleCount: 30, spread: 35, origin: { y: 0.85 }, colors: ['#f7b05e', '#f9c58d'] });
-    showFlashMessage("🍦🍨 virtual ice cream delivered! extra sprinkles of sorry 🍨🍦", true);
+    showFlashMessage("🍦🍨 virtual ice cream(Pani Puri you might have preffered) delivered! extra sprinkles of sorry 🍨🍦", true);
   });
   
   // ensure that if you are already forgiven, the apology generator still gives cute apologies but with love context
@@ -573,7 +567,7 @@
       // show a funny but relieved message if generating apology after forgiveness
       const currentMsg = apologyBox.innerText;
       // but not to override, just small flash
-      showFlashMessage("💖 Even though you forgave me, I'll keep apologizing for fun (I'm weird like that) 💖", false);
+      showFlashMessage("💖 Even though you forgave me, I'll keep apologizing (I'm weird like that) 💖", false);
     }
   };
   // replace safely but keep ref
