@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Sorry Not Sorry? · A Funny Apology for My Girlfriend 💕</title>
+  <!-- Google Fonts + Confetti library -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #ffe6f0 0%, #ffd9e8 40%, #ffe0f0 100%);
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+      cursor: default;
+    }
+
+    /* animated floating hearts background (subtle) */
+    body::before {
+      content: "💖💕💗💓💘";
+      font-size: 90px;
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      opacity: 0.08;
+      pointer-events: none;
+      white-space: nowrap;
+      transform: rotate(-5deg);
+      letter-spacing: 30px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .apology-card {
+      max-width: 650px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(4px);
+      border-radius: 72px 72px 80px 80px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(243, 104, 151, 0.2);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      text-align: center;
+      padding: 2rem 2rem 2.5rem;
+    }
+
+    .flair-emoji {
+      font-size: 3.2rem;
+      display: inline-block;
+      animation: gentleWiggle 2.5s infinite ease;
+    }
+
+    @keyframes gentleWiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      75% { transform: rotate(-6deg); }
+    }
+
+    h1 {
+      font-size: 2.9rem;
+      font-weight: 800;
+      margin: 0.25rem 0 0.25rem;
+      background: linear-gradient(135deg, #e65c7c, #b7416e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      text-shadow: 2px 2px 10px rgba(255, 140, 170, 0.2);
+    }
+
+    .greeting {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #b13e62;
+      background: #fff0f5;
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 60px;
+      margin: 0.75rem 0 1rem;
+      backdrop-filter: blur(2px);
+    }
+
+    .sub {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #9b5e74;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid #ffb7c5;
+      border-right: 3px solid #ffb7c5;
+      display: inline-block;
+      padding: 0 12px;
+    }
+
+    /* apology bubble */
+    .apology-bubble {
+      background: #ffffffea;
+      padding: 1.6rem 1.2rem;
+      margin: 1.3rem 0 1.8rem;
+      border-radius: 48px;
+      box-shadow: 0 12px 20px -10px rgba(191, 76, 110, 0.2), inset 0 1px 0 rgba(255,255,240,0.8);
+      border: 1px solid #ffccda;
+      transition: all 0.2s ease;
+      min-height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #9e3c60;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .apology-text {
+      background: #ffeef4;
+      padding: 0.5rem 1rem;
+      border-radius: 70px;
+      display: inline-block;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .btn {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      padding: 0.8rem 1.7rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.05);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sorry-btn {
+      background: #ff8ba7;
+      color: white;
+      box-shadow: 0 6px 0 #b13e62;
+    }
+
+    .sorry-btn:hover {
+      background: #ff7a9a;
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #b13e62;
+    }
+
+    .sorry-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #b13e62;
+    }
+
+    .forgive-btn {
+      background: #ffe0a3;
+      color: #a5436a;
+      box-shadow: 0 6px 0 #e2b87a;
+    }
+
+    .forgive-btn:hover {
+      background: #ffd98c;
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #cfaa69;
+    }
+
+    .forgive-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #c49f60;
+    }
+
+    .stats {
+      background: #fff1f7;
+      border-radius: 60px;
+      padding: 0.6rem 1.2rem;
+      display: inline-flex;
+      gap: 12px;
+      font-weight: 600;
+      color: #b54d74;
+      margin: 0.5rem 0 0.8rem;
+      font-size: 1rem;
+      backdrop-filter: blur(2px);
+    }
+
+    .status {
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: #fbe9f0;
+      padding: 0.7rem;
+      border-radius: 60px;
+      margin: 1rem 0 0.5rem;
+      transition: 0.2s;
+      color: #c24d72;
+    }
+
+    .flash-msg {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #fdd9e6;
+      padding: 0.5rem;
+      border-radius: 80px;
+      color: #a13f62;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .flash-msg.show {
+      opacity: 1;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #d989a3;
+      border-top: 1px dashed #ffc0d0;
+      padding-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 500px) {
+      .apology-card {
+        padding: 1.5rem 1.2rem 2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .apology-bubble {
+        font-size: 1.2rem;
+        padding: 1rem;
+      }
+      .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* tiny bounce animation for new apology */
+    @keyframes softPop {
+      0% { transform: scale(0.96); opacity: 0.7; }
+      80% { transform: scale(1.01); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .pop-animation {
+      animation: softPop 0.28s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+<div class="apology-card">
+  <div class="flair-emoji">
+    🐻‍❄️💔🐰
+  </div>
+  <h1>I'M SO SORRY<br></h1>
+  <div class="greeting">
+    🌸 For my incredible girlfriend (Ananya) 🌸
+  </div>
+  <div class="sub">
+    “Apologizing with my whole heart + zero dignity”
+  </div>
+
+  <!-- Dynamic apology message bubble -->
+  <div class="apology-bubble" id="apologyMessageBox">
+    <span>😅💬 Click below to see how <strong>adorably sorry</strong> I am!</span>
+  </div>
+
+  <div class="button-group">
+    <button class="btn sorry-btn" id="generateSorryBtn">
+      🤦‍♂️ Generate funny sorry
+    </button>
+    <button class="btn forgive-btn" id="forgiveBtn">
+      💖 Forgive me? (pretty please)
+    </button>
+  </div>
+
+  <div class="stats">
+    <span>🙇‍♂️ Apologies offered:</span>
+    <span id="apologyCounter">0</span>
+    <span>💬 funny excuses</span>
+  </div>
+
+  <div id="forgivenessStatus" class="status">
+    💌 Forgiveness status: pending... (needs giggles)
+  </div>
+
+  <div id="flashMessage" class="flash-msg">
+    🎀 extra cute message appears here ✨
+  </div>
+
+  <div class="footer-note">
+    🍦 PS: This apology comes with virtual ice cream rights 🍪
+  </div>
+</div>
+
+<script>
+  // ========================
+  // HILARIOUS APOLOGY DATABASE
+  // ========================
+  const funnyApologies = [
+    "😔 getting lost in my phone while you were right next to me — I made you feel invisible, and I'm truly sorry",
+    "💔 saying 'yeah, okay' when you shared something important... I wasn't really listening, and that hurts. I'm sorry",
+    "🤦‍♂️ making a joke out of something that mattered to you — I thought I was being funny, but I was being careless. Sorry",
+    "🎭 teasing you 'just for fun' but crossing the line without realizing — I never want to actually upset you. I'll be more careful",
+    "😅 poking fun a bit too much and forgetting that sometimes you just need me to be soft. Sorry for the silly irritation",
+    "💞 missing every single romantic hint you dropped because my brain was on airplane mode 🤦‍♂️ — I'm sorry for being so dense",
+    "🫣 not noticing your 'I need a hug' eyes because I was busy making a dumb meme — I'm sorry for not being present",
+    "🎮 zoning out mid-conversation and making you feel like you're competing with a screen — you deserve way more than that",
+    "😬 laughing off something that actually bugged you — I thought 'it's not a big deal' but it was to you. I'm really sorry",
+    "🌹 not picking up that you wanted romance, not another joke — I'll try to read the room better (I promise I'm trainable)",
+    "🤪 being annoying on purpose because I love your reactions, but I took it too far — sorry for making you actually mad",
+    "📵 scrolling instead of snuggling — I made you feel second place and that's not okay. I'm sorry, love",
+    // "😭 eating the last slice of pizza without asking (I'm a monster)",
+    // "🛏️ stealing 100% of the blanket and becoming a human burrito",
+    "📱 saying 'just one more game' for three hours straight",
+    // "🐶 comparing you to a cute golden retriever (it was a compliment?!)",
+    // "🎤 doing a terrible karaoke of YOUR favorite song",
+    // "🚽 leaving the toothpaste cap off... again. I'm chaotic evil",
+    // "🍟 not sharing my fries even when you gave me the cutest look",
+    "🤖 answering 'I'm fine' when I was clearly not fine (classic move)",
+    "📺 spoiling the end of your show by accident (I'm dead, I know)",
+    // "🤦 saying your hobby is 'cute' like it's a small thing — I was wrong",
+    "💨 pretending I didn't hear you because I was focused on a meme",
+    // "🍰 finishing the dessert you were saving for later. I owe you my soul",
+    // "🚗 being the worst backseat driver but in a 'loving' annoying way",
+    // "🦥 forgetting our inside joke and then laughing too late",
+    // "🫂 giving a mediocre hug when you clearly needed a bear hug",
+    "🤡 saying 'relax, it's not a big deal' – IT WAS A BIG DEAL, I'M SORRY",
+    // "🎮 laughing at my own joke for too long while you waited for attention",
+    "💤 falling asleep mid-text because 'I'll reply in a sec' (a lie)",
+    // "📦 leaving empty amazon boxes around like little monuments",
+    // "🐾 calling your pet 'our child' but forgetting to clean the litter box"
+  ];
+
+  // DOM elements
+  const apologyBox = document.getElementById("apologyMessageBox");
+  const generateBtn = document.getElementById("generateSorryBtn");
+  const forgiveBtn = document.getElementById("forgiveBtn");
+  const apologyCounterSpan = document.getElementById("apologyCounter");
+  const forgivenessStatusDiv = document.getElementById("forgivenessStatus");
+  const flashMsgDiv = document.getElementById("flashMessage");
+
+  let apologyCount = 0;
+  let forgivenFlag = false;    // track if main forgiveness already happened
+
+  // Helper: show temporary flash message (lasts 2 sec)
+  let flashTimeout = null;
+  function showFlashMessage(text, isSuccess = false) {
+    if (flashTimeout) clearTimeout(flashTimeout);
+    flashMsgDiv.textContent = text;
+    flashMsgDiv.classList.add("show");
+    // style variation based on mood
+    if (isSuccess) {
+      flashMsgDiv.style.background = "#e6ffe6";
+      flashMsgDiv.style.color = "#b3476b";
+    } else {
+      flashMsgDiv.style.background = "#fdd9e6";
+      flashMsgDiv.style.color = "#a13f62";
+    }
+    flashTimeout = setTimeout(() => {
+      flashMsgDiv.classList.remove("show");
+    }, 2300);
+  }
+
+  // function to add pop animation to apology bubble
+  function animateBubble() {
+    apologyBox.classList.add("pop-animation");
+    setTimeout(() => {
+      apologyBox.classList.remove("pop-animation");
+    }, 300);
+  }
+
+  // update the displayed funny apology
+  function generateRandomApology() {
+    const randomIndex = Math.floor(Math.random() * funnyApologies.length);
+    const selectedApology = funnyApologies[randomIndex];
+    // set new content with cute emojis around
+    apologyBox.innerHTML = `<span>😖💬 “I'm sorry for: <br><strong style="font-size:1.3rem; display:inline-block; margin-top:6px;">${selectedApology}</strong>” ✨</span>`;
+    animateBubble();
+    
+    // increase apology counter
+    apologyCount++;
+    apologyCounterSpan.textContent = apologyCount;
+    
+    // bonus: if apology count reaches special numbers, show a silly toast
+    if (apologyCount === 5) {
+      showFlashMessage("⚠️ 5 apologies already? I'm really layering the sorry! 😅", false);
+    } else if (apologyCount === 13) {
+      showFlashMessage("🍀 Lucky 13 apologies! That's next-level commitment 🫶", false);
+    } else if (apologyCount === 20) {
+      showFlashMessage("🏆 TWENTY apologies! You deserve a trophy (and I deserve forgiveness?)", false);
+    }
+    
+    // extra: If not forgiven yet and apology count > 3, we can tease the forgive button a little
+    if (!forgivenFlag && apologyCount === 3) {
+      showFlashMessage("💕 Psst... the 'Forgive Me' button is getting lonely! 👉👈", false);
+    }
+    if (!forgivenFlag && apologyCount === 8) {
+      showFlashMessage("🥺 Okay, I'm getting desperate... that forgive button looking real nice right now 💘", false);
+    }
+  }
+
+  // FORGIVE ME action: confetti + updates status + funny messages
+  function handleForgiveness() {
+    // always shoot confetti because it's fun! (multiple bursts)
+    canvasConfetti({ particleCount: 140, spread: 80, origin: { y: 0.6 }, colors: ['#ff9ec0', '#ffb7c5', '#ffd966'] });
+    canvasConfetti({ particleCount: 60, spread: 120, origin: { y: 0.7, x: 0.3 }, startVelocity: 15 });
+    canvasConfetti({ particleCount: 60, spread: 120, origin: { y: 0.7, x: 0.7 }, startVelocity: 15 });
+    setTimeout(() => {
+      canvasConfetti({ particleCount: 300, spread: 100, origin: { y: 0.5 }, startVelocity: 12, decay: 0.9 });
+    }, 120);
+    
+    // case: already forgiven before? => cute extra thanks, no change of main status (but we keep the love)
+    if (forgivenFlag) {
+      // already forgiven scenario: extra silly messages and appreciation
+      const alreadyMessages = [
+        "💞 You already forgave me, but you're so sweet that you clicked again! I love you! 💞",
+        "🥹 You forgave me twice?? I'm the luckiest goof on earth! 🥹",
+        "🌸 Already forgiven but thanks for the extra confetti! You're an angel 🌸",
+        "😭 STOP BEING SO NICE I'm tearing up (but in a manly way) 😭",
+        "🍭 You hit forgive again — my heart grew three sizes! 🍭"
+      ];
+      const randomMsg = alreadyMessages[Math.floor(Math.random() * alreadyMessages.length)];
+      showFlashMessage(randomMsg, true);
+      // Also maybe make little heart floating effect via extra mini confetti? already did above. 
+      // change forgiveness status temporarily? Let's keep main status as forgiven but add funny flash
+      forgivenessStatusDiv.innerHTML = "💞 FORGIVEN (and re-forgiven because you're an angel) 💞";
+      forgivenessStatusDiv.style.background = "#e0ffe6";
+      setTimeout(() => {
+        if (forgivenFlag) {
+          forgivenessStatusDiv.innerHTML = "✅ PERMANENTLY FORGIVEN 💖 (and extra hugs) ✅";
+          forgivenessStatusDiv.style.background = "#e6ffe6";
+        }
+      }, 1800);
+      return;
+    }
+    
+    // FIRST TIME FORGIVEN (main event)
+    forgivenFlag = true;
+    
+    // Update status div with heartfelt + funny vibe
+    forgivenessStatusDiv.innerHTML = "💖✨ FORGIVEN! ✨💖 <br> (you just made a silly guy very happy)";
+    forgivenessStatusDiv.style.background = "#d9ffe6";
+    forgivenessStatusDiv.style.color = "#a13e60";
+    forgivenessStatusDiv.style.fontWeight = "bold";
+    
+    // sweet flash message
+    showFlashMessage("🎉 YAY! She forgave me! I promise to be less of a dork (no promises though) 🎉", true);
+    
+    // change the apology bubble to a joyful forgiving message
+    apologyBox.innerHTML = `<span>💕🥰 SHE FORGAVE ME! 🥰💕<br><span style="font-size:1rem;">(and I'll never steal the blankets again... maybe)</span></span>`;
+    animateBubble();
+    
+    // add extra playful "thank you" dynamic update on stats bar
+    const statsDiv = document.querySelector('.stats');
+    statsDiv.style.background = "#f2ffe6";
+    statsDiv.style.transition = "0.2s";
+    
+    // after 2 sec, add a cute label inside stats bar (without breaking)
+    setTimeout(() => {
+      if (forgivenFlag) {
+        const extraSpan = document.createElement('span');
+        extraSpan.innerHTML = "❤️‍🔥 FORGIVEN ❤️‍🔥";
+        extraSpan.style.marginLeft = "8px";
+        extraSpan.style.background = "#ffecb3";
+        extraSpan.style.padding = "2px 10px";
+        extraSpan.style.borderRadius = "40px";
+        extraSpan.style.fontSize = "0.8rem";
+        const statParent = document.querySelector('.stats');
+        if (statParent && !statParent.querySelector('.forgiven-badge')) {
+          extraSpan.classList.add('forgiven-badge');
+          statParent.appendChild(extraSpan);
+        }
+      }
+    }, 600);
+    
+    // also change the background of the apology card slightly to celebrate (light spark)
+    const card = document.querySelector('.apology-card');
+    card.style.transition = "background 0.4s";
+    card.style.backgroundColor = "rgba(255, 245, 250, 0.96)";
+    
+    // bonus: generate a final random silly "i promise" inside the bubble after 4 seconds? no, it's fine.
+    // but also disable the "forgive" button from doing major status change again? Not disabled, but handled by forgivenFlag
+    // Also, change 'generate' button behaviour becomes more playful but not necessary
+  }
+
+  // generate first apology on click + also provide playful intro if they click before any apology
+  generateBtn.addEventListener("click", () => {
+    generateRandomApology();
+    // If the girl hasn't forgiven yet and the apology count is first time, show funny reminder
+    if (apologyCount === 1 && !forgivenFlag) {
+      setTimeout(() => {
+        showFlashMessage("👀 Step 2: press the pink 'Forgive Me?' button whenever you're ready (no rush 😉)", false);
+      }, 100);
+    }
+  });
+  
+  forgiveBtn.addEventListener("click", () => {
+    handleForgiveness();
+  });
+  
+  // little easter egg: if someone double clicks the title, add a random cat apology
+  const titleElement = document.querySelector('h1');
+  titleElement.addEventListener('dblclick', () => {
+    if (!forgivenFlag) {
+      const catApologies = [
+        "🐱 sorry for acting like a grumpy cat when I'm sleepy",
+        "🐈 I'm sorry for not sending enough cat memes lately",
+        "🐾 sorry for being a copycat of your bad jokes"
+      ];
+      const randomCat = catApologies[Math.floor(Math.random() * catApologies.length)];
+      apologyBox.innerHTML = `<span>🐈⬛✨ ULTRA SECRET APOLOGY: <br><strong>${randomCat}</strong> ✨🐈⬛</span>`;
+      animateBubble();
+      apologyCount++;
+      apologyCounterSpan.textContent = apologyCount;
+      showFlashMessage("🤫 double-click secret apology unlocked! extra sorry power! 🤭", false);
+    } else {
+      showFlashMessage("💕 You're already forgiven, but here's a virtual forehead kiss 😘", true);
+      canvasConfetti({ particleCount: 40, spread: 50, origin: { y: 0.5 }, colors: ['#ffb3ba'] });
+    }
+  });
+  
+  // one more cute initial message after page load: tiny welcome bubble for girlfriend
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (!forgivenFlag && apologyCount === 0) {
+        showFlashMessage("💗 Hey gorgeous! Click 'Generate funny sorry' for a silly confession... I really mean it 💗", false);
+      }
+    }, 800);
+    // gentle floating effect on status bar
+  });
+  
+  // additional: if you click on the "P.S. ice cream" area, it gives a little reaction
+  const footerNote = document.querySelector('.footer-note');
+  footerNote.addEventListener('click', () => {
+    canvasConfetti({ particleCount: 30, spread: 35, origin: { y: 0.85 }, colors: ['#f7b05e', '#f9c58d'] });
+    showFlashMessage("🍦🍨 virtual ice cream delivered! extra sprinkles of sorry 🍨🍦", true);
+  });
+  
+  // ensure that if you are already forgiven, the apology generator still gives cute apologies but with love context
+  // but we don't override too much, just make it fun.
+  const originalGenerate = generateRandomApology;
+  // overwriting but preserving original logic? We'll keep same but if forgiven flag true we add extra heart.
+  // actually already good, we just add a little extra when forgiven and generating apologies
+  const superGenerate = function() {
+    originalGenerate();
+    if (forgivenFlag) {
+      // show a funny but relieved message if generating apology after forgiveness
+      const currentMsg = apologyBox.innerText;
+      // but not to override, just small flash
+      showFlashMessage("💖 Even though you forgave me, I'll keep apologizing for fun (I'm weird like that) 💖", false);
+    }
+  };
+  // replace safely but keep ref
+  generateBtn.removeEventListener("click", generateRandomApology);
+  generateBtn.addEventListener("click", superGenerate);
+  // rebind variables 
+  window.superGenerate = superGenerate;
+  
+  // small responsive console-free fun 
+  console.log("%c💘 Website of sincere + funny apologies ready! 💘", "color: #c4456e; font-size: 14px; font-weight: bold;");
+</script>
+</body>
+</html>
